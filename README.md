@@ -3,7 +3,7 @@ Repositorio para el desarrollo del proyecto de la materia Ingeniería de Softwar
 
 En este repositorio se creara un gestor de inventarios el cual contara tanto con el codigo del proyecto asi como con la documentacion necesaria para formular correctamente el desarrollo de este software. 
 
-Para la realizacion del proyecto se usara Vuejs para el frontend y django REST para el backend. Tambien sera necesario tener instalado nodejs para poder hacer uso del manejador de paquetes npm.
+Para la realizacion del proyecto se usara Vue.js para el frontend y django REST para el backend. Tambien sera necesario tener instalado nodejs para poder hacer uso del manejador de paquetes npm.
 
 # Ejecucion del proyecto
 
