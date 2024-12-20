@@ -9,7 +9,7 @@ Integrantes del proyecto:
 ## Nombre del proyecto: Boxy
 
 ## Descripcion del objetivo proyecto
-El objetivo de Boxy es desarrollar una solución integral de gestión de inventarios que permita a empresas optimizar y controlar el almacenamiento de sus productos de manera eficiente. Mediante una interfaz sencilla y accesible, Boxy busca facilitar el seguimiento de inventarios, la identificación de stock bajo, el registro de entradas y salidas, y la generación de informes para tomar decisiones informadas.
+El objetivo de Boxy es desarrollar una solución integral de gestión de inventarios que permita a empresas optimizar y controlar el almacenamiento de sus productos de manera eficiente. Mediante una interfaz sencilla y accesible, Boxy busca facilitar el seguimiento de inventarios, la identificación de stock bajo, el registro de entradas y salidas, y la generación de informes.
 
 ## Tecnologias usadas
 
