@@ -8,13 +8,14 @@ Integrantes del proyecto:
 
 ## Nombre del proyecto: Boxy
 
-## Descripcion del objetivo proyecto
+## Descripcion del objetivo del proyecto
 El objetivo de Boxy es desarrollar una solución integral de gestión de inventarios que permita a empresas optimizar y controlar el almacenamiento de sus productos de manera eficiente. Mediante una interfaz sencilla y accesible, Boxy busca facilitar el seguimiento de inventarios, la identificación de stock bajo, el registro de entradas y salidas, y la generación de informes.
 
 ## Tecnologias usadas
 
 * Backend: django
 * Frontend: Vuejs
+* Lenguajes de programacion: Python y JavaScript
 * Base de datos: SQLite  
 
 # Ejecucion del proyecto
