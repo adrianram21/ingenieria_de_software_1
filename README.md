@@ -1,9 +1,21 @@
-## ingenieria_de_software_1
-Repositorio para el desarrollo del proyecto de la materia Ingeniería de Software 1
+# Repositorio grupal - Ingeniería de software 1 - 2024-2  
+Integrantes del proyecto:
 
-En este repositorio se creara un gestor de inventarios el cual contara tanto con el codigo del proyecto asi como con la documentacion necesaria para formular correctamente el desarrollo de este software. 
+* Adrian Alexander Benavides Caguasango
+* Brayan Alejandro Muñoz Pérez
+* Adrian Ramirez Gonzalez
+* Andrés Hernando Borda Muñoz
 
-Para la realizacion del proyecto se usara Vue.js para el frontend y django REST para el backend. Tambien sera necesario tener instalado nodejs para poder hacer uso del manejador de paquetes npm.
+## Nombre del proyecto: Boxy
+
+## Descripcion del objetivo proyecto
+El objetivo de Boxy es desarrollar una solución integral de gestión de inventarios que permita a empresas optimizar y controlar el almacenamiento de sus productos de manera eficiente. Mediante una interfaz sencilla y accesible, Boxy busca facilitar el seguimiento de inventarios, la identificación de stock bajo, el registro de entradas y salidas, y la generación de informes para tomar decisiones informadas.
+
+## Tecnologias usadas
+
+* Backend: django
+* Frontend: Vuejs
+* Base de datos: SQLite  
 
 # Ejecucion del proyecto
 
