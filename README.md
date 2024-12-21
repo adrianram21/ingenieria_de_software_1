@@ -1,5 +1,5 @@
 # Repositorio grupal - Ingeniería de software 1 - 2024-2  
-Integrantes del proyecto:
+## Integrantes - Grupo 3:
 
 * Adrian Alexander Benavides Caguasango
 * Brayan Alejandro Muñoz Pérez
