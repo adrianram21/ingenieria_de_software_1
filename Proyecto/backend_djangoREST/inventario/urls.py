@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import Vista_Prueba
+from . import views
 
 urlpatterns = [
-    path('texto/', Vista_Prueba.as_view(), name='textos-lista')
+    path('login', views.login),
+    path('register', views.register),
+    path('main', views.main)
 ]

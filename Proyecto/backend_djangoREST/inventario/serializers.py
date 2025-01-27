@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from .models import Prueba
+from .models import Usuario
 
-class Prueba_ser(serializers.ModelSerializer):
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Prueba
-        fields = [
-            'texto'
-        ]
+        model = Usuario
+        fields = ['id', 'id_organizacion', 'nombre', 'correo_electronico', 'password', 'rol']
