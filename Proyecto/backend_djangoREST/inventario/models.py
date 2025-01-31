@@ -85,3 +85,17 @@ class Movimiento(models.Model):
 
         def __str__(self):
             return f"{self.id_producto.nombre} - {self.precio} - {self.fecha}"
+
+
+class Producto(models.Model):
+    nombre = models.CharField(max_length=255)
+    categoria = models.CharField(max_length=100)
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    stock_minimo = models.IntegerField(default=5)
+
+    def stock_bajo(self):
+        return self.cantidad < self.stock_minimo
+
+    def __str__(self):
+        return self.nombre

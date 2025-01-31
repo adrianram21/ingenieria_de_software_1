@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'inventario',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework',
+    'inventario',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 MIDDLEWARE = [
 
