@@ -14,6 +14,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='usuario',
             name='id_organizacion',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='inventario.organizacion'),
+            field=models.ForeignKey(null=True,
+                                    on_delete=django.db.models.deletion.CASCADE,
+                                    to='inventario.organizacion'),
         ),
     ]

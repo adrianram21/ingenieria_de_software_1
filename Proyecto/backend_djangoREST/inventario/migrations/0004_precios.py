@@ -14,10 +14,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Precios',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('precio', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
+                ('precio', models.DecimalField(decimal_places=2,
+                                               max_digits=10)),
                 ('fecha', models.DateField(auto_now_add=True)),
-                ('id_producto', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventario.producto')),
+                ('id_producto', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                                  to='inventario.producto')),
             ],
         ),
     ]
