@@ -9,6 +9,10 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Usuario, Organizacion
 from django.db import IntegrityError
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import viewsets
+from django.db.models import F
+from .models import Producto
+from .serializers import ProductoSerializer
 
 def generar_jwt(usuario):
     refresh = RefreshToken.for_user(usuario)
@@ -72,3 +76,50 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def main(request):
     return Response({"message": "Funciona"}, status=status.HTTP_200_OK)
+
+
+class ProductoViewSet(viewsets.ModelViewSet):
+    """
+    CRUD de productos para el inventario.
+    Solo los administradores pueden modificar datos.
+    """
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        """
+        Permitir solo a los administradores registrar nuevos productos.
+        """
+        if request.user.rol != "Administrador":
+            return Response({"error": "No tienes permisos para agregar productos"}, status=status.HTTP_403_FORBIDDEN)
+        return super().create(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        """
+        Permitir solo a los administradores modificar productos.
+        """
+        if request.user.rol != "Administrador":
+            return Response({"error": "No tienes permisos para modificar productos"}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        """
+        Permitir solo a los administradores eliminar productos.
+        """
+        if request.user.rol != "Administrador":
+            return Response({"error": "No tienes permisos para eliminar productos"}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
+
+# API para visualizar productos con stock bajo
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def stock_bajo(request):
+    """
+    Retorna los productos cuyo stock es inferior al mínimo definido.
+    """
+    productos_bajo_stock = Producto.objects.filter(cantidad__lt=F('stock_minimo'))
+    serializer = ProductoSerializer(productos_bajo_stock, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

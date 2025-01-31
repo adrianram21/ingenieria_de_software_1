@@ -4,7 +4,9 @@ import RegisterView from "@/views/RegisterView.vue"
 import MainView from "@/views/MainView.vue"
 import { useLoginStore } from "@/store/Login"
 import AdminView from "@/views/AdminView.vue"
-import RecoverView from "@/views/RecoverView.vue"  
+import RecoverView from "@/views/RecoverView.vue"
+import InventoryView from "@/views/InventoryView.vue"  
+import StockLowView from "@/views/StockLowView.vue"  
 
 const routes = [
     {
@@ -56,6 +58,26 @@ const routes = [
             needAdmin: true
         }
     },
+    
+    {
+        path: '/inventario',
+        name: 'inventario',
+        component: InventoryView,
+        meta: {
+            requireAuth: true,
+            needAdmin: true  
+        }
+    },
+    
+    {
+        path: '/stock_bajo',
+        name: 'stock_bajo',
+        component: StockLowView,
+        meta: {
+            requireAuth: true,
+            needAdmin: true  
+        }
+    },
 ]
 
 const router = createRouter({
@@ -63,21 +85,21 @@ const router = createRouter({
     routes 
 })
 
+
 router.beforeEach((to, from, next) => {
     const store = useLoginStore()
     const Auth = store.accessJWT
     const Rol = store.rol
 
-    if((to.meta.requireAuth) && (Auth == null)) {
-        next('login')
+    if ((to.meta.requireAuth) && (Auth == null)) {
+        next('login')  
     } else {
-        if ((to.meta.needAdmin &&  Rol == "Administrador") || (!to.meta.needAdmin)) {
+        if ((to.meta.needAdmin && Rol == "Administrador") || (!to.meta.needAdmin)) {
             next()
         } else {
             alert("No cuentas con los permisos para acceder")
             next(from.name)
         }
-        
     }
 })
 
