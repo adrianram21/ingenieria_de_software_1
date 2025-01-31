@@ -19,6 +19,7 @@
 
         <button @click="authUser">Iniciar sesión</button>
         <p>¿No tienes una cuenta? Registrate <router-link :to="{name: 'register'}">aquí</router-link></p>
+        <p>¿Olvidaste tu contraseña? Recupérala <router-link :to="{name: 'recover'}">aquí</router-link></p>
       </div>
     </div>
   </div>
@@ -96,7 +97,7 @@
     border: 2px solid $primary-blue;
     border-radius: 30px;
     width: 300px;
-    height: 350px;
+    height: 420px;
   }
 
   .data {

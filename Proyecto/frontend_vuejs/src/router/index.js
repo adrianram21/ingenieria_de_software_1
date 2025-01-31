@@ -4,6 +4,7 @@ import RegisterView from "@/views/RegisterView.vue"
 import MainView from "@/views/MainView.vue"
 import { useLoginStore } from "@/store/Login"
 import AdminView from "@/views/AdminView.vue"
+import RecoverView from "@/views/RecoverView.vue"  
 
 const routes = [
     {
@@ -14,6 +15,15 @@ const routes = [
         path: '/login',
         name: 'login',
         component: LoginView,
+        meta: {
+            requireAuth: false,
+            needAdmin: false
+        }
+    },
+    {
+        path: '/recover',
+        name: 'recover',
+        component: RecoverView,
         meta: {
             requireAuth: false,
             needAdmin: false
