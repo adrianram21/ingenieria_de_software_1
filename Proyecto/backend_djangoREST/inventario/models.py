@@ -52,17 +52,20 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.nombre
 
+    
 class Producto(models.Model):
-    nombre = models.CharField(max_length=50)
-    categoria = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=255)
+    categoria = models.CharField(max_length=100)
     cantidad = models.IntegerField()
-    precio_unidad = models.DecimalField(max_digits=10, decimal_places=2)
-    stock_minimo = models.IntegerField()
-    id_organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    stock_minimo = models.IntegerField(default=5)
+
+    def stock_bajo(self):
+        return self.cantidad < self.stock_minimo
 
     def __str__(self):
         return self.nombre
-    
+
 class Movimiento(models.Model):
     movimientos = [
         ("Salida", "Salida"),
@@ -78,24 +81,12 @@ class Movimiento(models.Model):
     def __str__(self):
         return self.descripcion
 
-    class Precios(models.Model):
-        id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-        precio = models.DecimalField(max_digits=10, decimal_places=2)
-        fecha = models.DateField(auto_now_add=True)
-
-        def __str__(self):
-            return f"{self.id_producto.nombre} - {self.precio} - {self.fecha}"
-
-
-class Producto(models.Model):
-    nombre = models.CharField(max_length=255)
-    categoria = models.CharField(max_length=100)
-    cantidad = models.IntegerField()
+class Precios(models.Model):
+    id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    stock_minimo = models.IntegerField(default=5)
-
-    def stock_bajo(self):
-        return self.cantidad < self.stock_minimo
+    fecha = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.id_producto.nombre} - {self.precio} - {self.fecha}"
+
+
