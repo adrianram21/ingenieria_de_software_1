@@ -66,7 +66,7 @@
         alert("Registro exitoso")
         router.push({name: 'login'})
       } else {
-        alert("Registro fallido. Vuelva a intentarlo")
+        alert(registerUser.getError().value)
         nombre.value = ""
         rol.value = "Administrador"
         organizacion.value = ""

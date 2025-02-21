@@ -5,6 +5,7 @@ para la base de datos
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.validators import MinLengthValidator
 
 class Organizacion(models.Model):
     """
@@ -68,7 +69,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ('Administrador', 'Administrador')
     ]
     id_organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE, null=True)
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, blank=False, validators=[MinLengthValidator(1)])
     correo_electronico = models.EmailField(max_length=50, unique=True)
     rol = models.CharField(choices=roles, default='Usuario', max_length=20)
     is_staff = models.BooleanField(default=False)

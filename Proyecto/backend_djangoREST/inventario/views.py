@@ -3,7 +3,7 @@ Vistas para la
 aplicacion de inventario
 """
 
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404
 from django.db.models import F
 from rest_framework import status, viewsets
@@ -14,6 +14,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UsuarioSerializer, ProductoSerializer
 from .models import Usuario, Organizacion, Producto
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+
 
 
 def generar_jwt(usuario):
@@ -47,47 +50,58 @@ def login(request):
 
 @api_view(['POST'])
 def register(request):
-    """
-    Funcion asociada al 
-    proceso de registro
-    """
-
     nombre = request.data['nombre']
     rol = request.data['rol']
     correo_electronico = request.data['correo_electronico']
     password = request.data['password']
 
-    if rol == "Administrador":
-        try:
-            Organizacion.objects.create(nombre_organizacion = request.data['organizacion'])
-        except IntegrityError:
-            return Response({"error": "Ya hay una organizacion con este nombre"},
-                            status=status.HTTP_400_BAD_REQUEST)
+    if not nombre.strip():
+        return Response({"error": "Error durante el proceso de registro"},
+                        status=status.HTTP_400_BAD_REQUEST)
+    
+    if len(password) < 8:
+        return Response({"error": "Error durante el proceso de registro"},
+                        status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        id_organizacion = Organizacion.objects.get(
-            nombre_organizacion = request.data['organizacion'])
-    except Organizacion.DoesNotExist:
-        return Response({"error": "La organizacion no existe"}, status=status.HTTP_400_BAD_REQUEST)
+        with transaction.atomic():
+            if rol == "Administrador":
+                try:
+                    Organizacion.objects.create(nombre_organizacion=request.data['organizacion'])
+                except IntegrityError:
+                    return Response({"error": "Error durante el proceso de registro"},
+                                    status=status.HTTP_400_BAD_REQUEST)
 
-    try:
-        usuario = Usuario.objects.create_user(
-            nombre = nombre,
-            rol = rol,
-            id_organizacion = id_organizacion,
-            correo_electronico = correo_electronico,
-            password = password
-        )
+            try:
+                id_organizacion = Organizacion.objects.get(
+                    nombre_organizacion=request.data['organizacion'])
+            except Organizacion.DoesNotExist:
+                return Response({"error": "Error durante el proceso de registro"},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                EmailValidator()(correo_electronico)
+            except ValidationError:
+                return Response({"error": "Error durante el proceso de registro"},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            usuario = Usuario.objects.create_user(
+                nombre=nombre,
+                rol=rol,
+                id_organizacion=id_organizacion,
+                correo_electronico=correo_electronico,
+                password=password
+            )
+
+            serializer = UsuarioSerializer(instance=usuario)
+
+            return Response({"mensaje": "Registro exitoso autorizado",
+                             "user": serializer.data},
+                            status=status.HTTP_200_OK)
+
     except IntegrityError:
-        return Response({"error": "El correo electronico ya esta en uso"}
-                        , status=status.HTTP_400_BAD_REQUEST)
-
-
-    serializer = UsuarioSerializer(instance=usuario)
-
-    return Response({"mensaje": "Registro existoso autorizado",
-                     "user": serializer.data},
-                    status=status.HTTP_200_OK)
+        return Response({"error": "Error durante el proceso de registro"},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

@@ -55,7 +55,7 @@ class RegisterService {
             const response = await res.json()
 
             if('error' in response) {
-                this.error.value = "Registro fallido" 
+                this.error.value = response.error
                 return false
             }
 
