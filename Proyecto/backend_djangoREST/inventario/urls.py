@@ -17,4 +17,5 @@ urlpatterns = [
     path("addProduct/", views.addProduct),
     path("updateProduct/", views.updateProduct),
     path("lowStock/", views.showLowStockProducts),
+    path("registerMovement/", views.registerMovement),
 ]

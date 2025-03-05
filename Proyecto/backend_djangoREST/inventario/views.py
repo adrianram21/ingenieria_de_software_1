@@ -8,14 +8,14 @@ from django.shortcuts import get_object_or_404
 from django.db.models import F
 import random
 import string
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UsuarioSerializer, ProductoSerializer
-from .models import Usuario, Organizacion, Producto
+from .models import Usuario, Organizacion, Producto, Movimiento
 from django.core.mail import send_mail
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
@@ -235,3 +235,38 @@ def showLowStockProducts(request):
 
     serializer = ProductoSerializer(productos, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def registerMovement(request):
+    """
+    Funcion para registrar
+    movimientos
+    """
+
+    id_producto = request.data["id_producto"]
+    tipo_movimiento = request.data["tipo"]
+    fecha = request.data["fecha"]
+    descripcion = request.data["descripcion"]
+    cantidad = request.data["cantidad"]
+    id_organizacion = request.data["id_organizacion"]
+
+    producto = get_object_or_404(Producto, id=id_producto)
+    
+    movimiento = Movimiento.objects.create(
+        id_producto=Producto.objects.get(id=id_producto),
+        id_organizacion=Organizacion.objects.get(id=id_organizacion),
+        tipo_movimiento=tipo_movimiento,
+        fecha=fecha,
+        descripcion=descripcion,
+        cantidad=cantidad
+    )
+
+    if tipo_movimiento == "entrada":
+        producto.cantidad += cantidad
+    else:
+        producto.cantidad -= cantidad
+    producto.save()
+
+    return Response({"mensaje": "Movimiento registrado"}, status=status.HTTP_200_OK)
