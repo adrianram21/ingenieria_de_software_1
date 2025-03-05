@@ -96,6 +96,26 @@ export const useProductsStore = defineStore("productos", {
         console.error("Error al obtener productos:", error);
       }
     },
+    async lowStock(id_organizacion, auth) {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/inventario/lowStock/", {
+            method: "POST",
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + auth
+            },
+            body: JSON.stringify({
+              id_organizacion: id_organizacion,                       
+            })
+        });
+        
+        this.productos = await res.json();
+
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+      }
+    },
     
   },
 });

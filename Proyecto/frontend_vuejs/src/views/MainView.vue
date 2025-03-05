@@ -10,6 +10,7 @@
                 <router-link :to="{name: 'stockBajo'}"><button>Productos con stock bajo</button></router-link>
                 <router-link :to="{name: 'movimientos'}"><button>Historial de movimientos</button></router-link>
                 <router-link :to="{name: 'registrarMovimiento'}"><button>Registrar movimiento</button></router-link>
+                <button class="logout" @click="logout">Cerrar sesión</button>
             </div>
         </div>
     </div>
@@ -17,7 +18,14 @@
 </template>
 
 <script setup>
+    import { useLoginStore } from '@/store/Login'
+    import router from '@/router';
 
+    const userStore = useLoginStore()
+    const logout = () => {
+        userStore.logout()
+        router.push('login')
+    }
 </script>
 
 <style lang='scss' scoped>
@@ -54,14 +62,31 @@
             height: 40px;
             font-weight: bold;
         }
-    }
+        button:hover {
+            cursor: pointer;
+            background-color: $primary-white;
+            color: $primary-blue;
+            font-weight: bold;
+        }
 
-    button:hover {
-        cursor: pointer;
-        background-color: $primary-white;
-        color: $primary-blue;
+        .logout {
+        margin: 0;
+        background-color: $delete-red;
+        color: $primary-white;
+        border: 3px solid $delete-red;
+        border-radius: 10px;
+        width: 200px;
+        height: 40px;
         font-weight: bold;
     }
+
+        .logout:hover {
+                cursor: pointer;
+                background-color: $primary-white;
+                color: $delete-red;
+                font-weight: bold;
+            }   
+        }
 
     .second-layer {
         background-color: $primary-white;
@@ -69,7 +94,7 @@
         display: flex;
         border-radius: 30px;
         width: 300px;
-        height: 420px;
+        height: 480px;
         align-items: center;
         flex-direction: column;
         gap: 30px;

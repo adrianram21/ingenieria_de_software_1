@@ -220,3 +220,18 @@ def updateProduct(request):
     producto.stock_minimo = request.data["stock_minimo"]
     producto.save()
     return Response({"mensaje": "Producto actualizado"}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def showLowStockProducts(request):
+    """
+    Funcion para mostrar
+    los productos
+    """
+
+    productos = Producto.objects.filter(id_organizacion=request.data["id_organizacion"], cantidad__lt=F('stock_minimo'))
+    
+
+    serializer = ProductoSerializer(productos, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
