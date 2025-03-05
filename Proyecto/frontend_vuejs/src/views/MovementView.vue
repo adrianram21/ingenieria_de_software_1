@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>jeje god</h1>
+    <h1>Historial del movimientos</h1>
   </div>
 </template>
 
