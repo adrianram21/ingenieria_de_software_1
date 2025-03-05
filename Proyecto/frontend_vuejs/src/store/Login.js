@@ -15,7 +15,7 @@ export const useLoginStore = defineStore('login', {
     actions: {
         async login(correo_electronico, password) {
             try {
-                const res = await fetch('http://127.0.0.1:8000/inventario/login', {
+                const res = await fetch('http://127.0.0.1:8000/inventario/login/', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

@@ -1,30 +1,11 @@
 <template>
-  <div id="app">
 
-    <nav>
-      <router-link to="/main">Inicio</router-link> |
-      <router-link to="/inventario">Inventario</router-link> |
-      <router-link to="/stock_bajo">Stock Bajo</router-link> |
-      <router-link to="/admin">Administración</router-link> |
-      <button @click="logout">Cerrar Sesión</button>
-    </nav>
+  <router-view />
 
-    <router-view />
-  </div>
 </template>
 
 <script setup>
-import { useLoginStore } from "@/store/Login";
-import { useRouter } from "vue-router";
 
-const store = useLoginStore();
-const router = useRouter();
-
-
-const logout = () => {
-  store.$reset(); 
-  router.push("/login"); 
-};
 </script>
 
 <style>

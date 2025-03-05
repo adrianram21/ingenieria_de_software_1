@@ -90,13 +90,14 @@ class Producto(models.Model):
     Definición de la 
     clase Producto
     """
-
+    
+    id_organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=255)
     categoria = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock_minimo = models.IntegerField(default=5)
-
+ 
     def stock_bajo(self):
         """
         Funcion que verifica si

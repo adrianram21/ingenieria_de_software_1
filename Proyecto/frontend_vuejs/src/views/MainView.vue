@@ -1,77 +1,78 @@
 <template>
     <div class="first-layer">
-    <h1>Autenticacion</h1>
-        <div>
-            <button @click="sendToServer">Autenticar</button>
+        <div class="second-layer">
+            <div>
+                <h1>Menú principal</h1>
+            </div>    
+            <div class="buttons">
+                <router-link :to="{name: 'inventario'}"><button>Inventario</button></router-link>
+                <router-link :to="{name: 'informe'}"><button>Informe</button></router-link>
+                <router-link :to="{name: 'stockBajo'}"><button>Productos con stock bajo</button></router-link>
+                <router-link :to="{name: 'movimientos'}"><button>Historial de movimientos</button></router-link>
+                <router-link :to="{name: 'registrarMovimiento'}"><button>Registrar movimiento</button></router-link>
+            </div>
         </div>
-        <div>
-            <router-link :to="{name: 'admin'}"><button>Prueba admin</button></router-link>
-        </div>
-
     </div>
   
 </template>
 
 <script setup>
-    import { useLoginStore } from '@/store/Login'
-    import router from '@/router'
-
-    const store = useLoginStore()
-
-    const sendToServer = async () => {
-        let response = await fetch('http://127.0.0.1:8000/inventario/main', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + store.accessJWT
-            }
-        })
-
-        if (response.status === 401) {
-            const refreshed = await store.refreshToken()
-            if (refreshed) {
-                alert("Token refrescado")
-                response = await fetch('http://127.0.0.1:8000/inventario/main', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + store.accessJWT
-                    }
-                })
-            } else {
-                alert("Token de refresco vencido")
-                store.logout()
-                router.push({name: 'login'})
-            }
-            
-        }
-
-        const res = await response.json()
-
-        if(res.message == "Funciona") {
-            alert("Prueba de autenticacion exitosa")
-        } else {
-            alert("Prueba de autenticacion fallida")
-            router.push({name: 'login'})
-        }
-    }
 
 </script>
 
 <style lang='scss' scoped>
 
     h1 {
-        color: $neutral-black;
         font-family: "Verdana";
+        color: $neutral-black;
+        margin-bottom: 10px;
     }
+
     .first-layer {
         display: flex;
         justify-content: center;
         align-items: center;  
-        flex-direction: column;  
-        gap: 10px; 
+        flex-direction: column;   
+        height: 100vh;
+        background: linear-gradient(135deg, $primary-blue, $primary-white);
     } 
+
+    .buttons {
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+
+        button {
+            margin: 0;
+            background-color: $primary-blue;
+            color: $primary-white;
+            border: 3px solid $primary-blue;
+            border-radius: 10px;
+            width: 200px;
+            height: 40px;
+            font-weight: bold;
+        }
+    }
+
+    button:hover {
+        cursor: pointer;
+        background-color: $primary-white;
+        color: $primary-blue;
+        font-weight: bold;
+    }
+
+    .second-layer {
+        background-color: $primary-white;
+        border: 2px solid $primary-blue;
+        display: flex;
+        border-radius: 30px;
+        width: 300px;
+        height: 420px;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+    }
 
 </style>

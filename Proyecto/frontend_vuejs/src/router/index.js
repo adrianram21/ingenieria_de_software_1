@@ -4,9 +4,12 @@ import RegisterView from "@/views/RegisterView.vue"
 import MainView from "@/views/MainView.vue"
 import { useLoginStore } from "@/store/Login"
 import AdminView from "@/views/AdminView.vue"
-import RecoverView from "@/views/RecoverView.vue"
-import InventoryView from "@/views/InventoryView.vue"  
-import StockLowView from "@/views/StockLowView.vue"  
+import RecoverView from "@/views/RecoverView.vue" 
+import InventoryView from "@/views/InventoryView.vue"
+import RegisterMovementView from "@/views/RegisterMovementView.vue"
+import LowStockView from "@/views/LowStockView.vue"
+import MovementView from "@/views/MovementView.vue"
+import InformView from "@/views/InformView.vue"
 
 const routes = [
     {
@@ -58,24 +61,49 @@ const routes = [
             needAdmin: true
         }
     },
-    
     {
         path: '/inventario',
         name: 'inventario',
         component: InventoryView,
         meta: {
             requireAuth: true,
-            needAdmin: true  
+            needAdmin: false
         }
     },
-    
     {
-        path: '/stock_bajo',
-        name: 'stock_bajo',
-        component: StockLowView,
+        path: '/registrarMovimiento',
+        name: 'registrarMovimiento',
+        component: RegisterMovementView,
         meta: {
             requireAuth: true,
-            needAdmin: true  
+            needAdmin: false
+        }
+    },
+    {
+        path: '/stockBajo',
+        name: 'stockBajo',
+        component: LowStockView,
+        meta: {
+            requireAuth: true,
+            needAdmin: false
+        }
+    },
+    {
+        path: '/movimientos',
+        name: 'movimientos',
+        component: MovementView,
+        meta: {
+            requireAuth: true,
+            needAdmin: false
+        }
+    },
+    {
+        path: '/informe',
+        name: 'informe',
+        component: InformView,
+        meta: {
+            requireAuth: true,
+            needAdmin: false
         }
     },
 ]

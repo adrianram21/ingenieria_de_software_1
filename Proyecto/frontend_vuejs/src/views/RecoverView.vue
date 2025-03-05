@@ -10,7 +10,7 @@
           
           <div class="buttons">
             <router-link :to="{name: 'login'}"><button>Volver</button></router-link>
-            <button>Enviar</button> 
+            <button @click="sendPassword">Enviar</button> 
           </div>
 
         </div>
@@ -23,6 +23,23 @@
     import { ref } from 'vue'
 
     let correo_electronico = ref("")
+
+    const sendPassword = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/inventario/recover/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ correo_electronico: correo_electronico.value }),
+        });
+
+        const data = await response.json();
+        if ('error' in data){
+          alert("Error al enviar el mensaje")
+        }          
+      } catch (error) {
+        console.log(error)
+      }
+    };
   
   </script>
   

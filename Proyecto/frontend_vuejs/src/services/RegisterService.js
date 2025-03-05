@@ -37,7 +37,7 @@ class RegisterService {
 
     async register(nombre, rol, organizacion, correo_electronico, password) {
         try {
-            const res = await fetch('http://127.0.0.1:8000/inventario/register', {
+            const res = await fetch('http://127.0.0.1:8000/inventario/register/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
