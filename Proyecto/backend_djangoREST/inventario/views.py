@@ -118,33 +118,6 @@ def main(request):
     return Response({"message": "Funciona"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-def sendPassword(request):
-    """
-    Funcion para el envio
-    de contraseñas
-    """
-
-    correo_electronico = request.data['correo_electronico']
-    try:
-        usuario = Usuario.objects.get(correo_electronico=correo_electronico)
-    except Usuario.DoesNotExist:
-        return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-    
-    nueva_contrasena = "".join(random.choices(string.ascii_letters + string.digits, k=10))
-    usuario.set_password(nueva_contrasena)  
-    usuario.save()
-
-    send_mail(
-        "Recuperacion de contrasena",
-        f"Hola {usuario.nombre}, tu contrasena es {nueva_contrasena}",
-        "boxy86858@gmail.com",
-        [correo_electronico],
-        fail_silently=False 
-        )
-    
-    return Response({"mensaje": "Correo enviado"}, status=status.HTTP_200_OK)
-
-@api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def showProducts(request):
